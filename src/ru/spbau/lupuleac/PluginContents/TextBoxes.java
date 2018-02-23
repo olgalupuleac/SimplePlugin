@@ -18,9 +18,8 @@ public class TextBoxes extends AnAction {
     }
 
     public void actionPerformed(AnActionEvent event) {
-        Project project = event.getData(PlatformDataKeys.PROJECT);
-        //String projectName = ProjectInfo.projectInfo(event);
+        Project project = event.getProject();
         String txt= Messages.showInputDialog(project, "What is your name?", "Input your name", Messages.getQuestionIcon());
-        Messages.showMessageDialog(project, "Hello, " + txt + "!\n I am glad to see you.\n"/* + projectName*/, "Information", Messages.getInformationIcon());
+        Messages.showMessageDialog(project, "Hello, " + txt + "!\n I am glad to see you in " + project.getName(), "Information", Messages.getInformationIcon());
     }
 }
