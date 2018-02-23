@@ -20,8 +20,6 @@ public class TextBoxes extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getProject();
-        //String txt= Messages.showInputDialog(project, "What is your name?", "Input your name", Messages.getQuestionIcon());
-        //showMessageDialog(project, "Hello, " + txt + "!\n I am glad to see you in " + project.getName(), "Information", Messages.getInformationIcon());
-        Messages.showInfoMessage(ProjectInfo.projectModules(project), "Project Properties");
+        Messages.showInfoMessage(ProjectInfo.projectJavaClasses(project), "Project Properties");
     }
 }
