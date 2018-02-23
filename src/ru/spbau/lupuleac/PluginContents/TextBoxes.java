@@ -20,6 +20,6 @@ public class TextBoxes extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getProject();
-        Messages.showInfoMessage(ProjectInfo.projectJavaClasses(project), "Project Properties");
+        //Messages.showInfoMessage(ProjectInfo.projectJavaClasses(project), "Project Properties");
     }
 }

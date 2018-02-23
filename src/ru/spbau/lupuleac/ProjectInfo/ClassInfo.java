@@ -38,11 +38,11 @@ public class ClassInfo {
         return totalFieldsNamesLength;
     }
 
-    double averageMethodLength(){
+    public double averageMethodLength(){
         return ((double) totalMethodsLength) / numberOfMethods;
     }
 
-    double averageFieldsNamesLength(){
+    public double averageFieldsNamesLength(){
         return ((double) totalFieldsNamesLength) / numberOfFields;
     }
 
