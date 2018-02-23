@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import ru.spbau.lupuleac.ProjectInfo.ProjectInfo;
 
 public class TextBoxes extends AnAction {
     // If you register the action from Java code, this constructor is used to set the menu item name
@@ -19,7 +20,8 @@ public class TextBoxes extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getProject();
-        String txt= Messages.showInputDialog(project, "What is your name?", "Input your name", Messages.getQuestionIcon());
-        Messages.showMessageDialog(project, "Hello, " + txt + "!\n I am glad to see you in " + project.getName(), "Information", Messages.getInformationIcon());
+        //String txt= Messages.showInputDialog(project, "What is your name?", "Input your name", Messages.getQuestionIcon());
+        //showMessageDialog(project, "Hello, " + txt + "!\n I am glad to see you in " + project.getName(), "Information", Messages.getInformationIcon());
+        Messages.showInfoMessage(ProjectInfo.projectModules(project), "Project Properties");
     }
 }
