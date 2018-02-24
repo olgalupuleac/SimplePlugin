@@ -1,10 +1,20 @@
 package ru.spbau.lupuleac.ProjectInfo;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ContentIterator;
+import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.search.FileTypeIndex;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.ProjectScope;
+import com.intellij.util.indexing.FileBasedIndex;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,16 +62,24 @@ public class ProjectInfo {
     }
 
     private void collectInfo(){
-        VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
-        for (VirtualFile file : vFiles) {
-            PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-            if(psiFile instanceof PsiJavaFile){
-                PsiJavaFile psiJavaFile = (PsiJavaFile)psiFile;
-                final PsiClass[] classes = psiJavaFile.getClasses();
-                totalNumberOfClasses += classes.length;
-                for(PsiClass psiClass : classes){
-                    collectInfoAboutMethods(psiClass);
-                    collectInfoAboutFields(psiClass);
+        //VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
+        Collection<VirtualFile> files = FileBasedIndex.getInstance()
+                .getContainingFiles(
+                        FileTypeIndex.NAME,
+                        JavaFileType.INSTANCE,
+                        ProjectScope.getProjectScope(project));
+        for (VirtualFile vFile : files) {
+            for(VirtualFile file : files){
+                System.out.println(file.getUrl());
+                PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+                if(psiFile instanceof PsiJavaFile){
+                    PsiJavaFile psiJavaFile = (PsiJavaFile)psiFile;
+                    final PsiClass[] classes = psiJavaFile.getClasses();
+                    totalNumberOfClasses += classes.length;
+                    for(PsiClass psiClass : classes){
+                        collectInfoAboutMethods(psiClass);
+                        collectInfoAboutFields(psiClass);
+                    }
                 }
             }
 
