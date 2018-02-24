@@ -21,7 +21,7 @@ public class TextBoxes extends AnAction {
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getProject();
         ProjectInfo projectInfo = new ProjectInfo(project);
-        Messages.showInfoMessage(Integer.toString(projectInfo.getTotalNumberOfClasses()),
+        Messages.showInfoMessage(Integer.toString(projectInfo.getTotalNumberOfClasses()) + " " + Double.toString(projectInfo.averageNumberOfFields()),
                 "Project Properties");
     }
 }
