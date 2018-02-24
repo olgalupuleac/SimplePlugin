@@ -35,7 +35,7 @@ public class ProjectInfo {
         return totalNumberOfMethods;
     }
 
-    public double averageNumberOfFields() {
+    public double getAverageNumberOfFields() {
         double totalNumberOfFields = 0;
         for (ClassInfo classInfo : classInfoMap.values()) {
             totalNumberOfFields += classInfo.getNumberOfFields();
@@ -51,8 +51,8 @@ public class ProjectInfo {
         return totalMethodLength / getTotalNumberOfMethods();
     }
 
-    public String getProjectName() {
-        return project.getName();
+    public Map<PsiClass, ClassInfo> getClassInfoMap() {
+        return classInfoMap;
     }
 
     private void collectInfo() {

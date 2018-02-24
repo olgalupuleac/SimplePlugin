@@ -4,7 +4,7 @@ import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.components.ApplicationComponent;
 import org.jetbrains.annotations.NotNull;
-import ru.spbau.lupuleac.PluginContents.TextBoxes;
+
 
 public class MyPluginRegistration implements ApplicationComponent {
     // Returns the component name (any unique string value).
@@ -18,7 +18,7 @@ public class MyPluginRegistration implements ApplicationComponent {
     // the plugin.xml file, this method is called on IDEA start-up.
     public void initComponent() {
         ActionManager am = ActionManager.getInstance();
-        TextBoxes action = new TextBoxes();
+        BasicProjectInfoButton action = new BasicProjectInfoButton();
 
         // Passes an instance of your custom ru.spbau.lupuleac.MyPlugin.TextBoxes class to the registerAction method of the ActionManager class.
         am.registerAction("MyPluginAction", action);
