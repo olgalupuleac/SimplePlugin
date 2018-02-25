@@ -13,9 +13,6 @@ public class MyPluginRegistration implements ApplicationComponent {
         return "MyPlugin";
     }
 
-
-    // If you register the ru.spbau.lupuleac.MyPlugin.MyPluginRegistration class in the <application-components> section of
-    // the plugin.xml file, this method is called on IDEA start-up.
     public void initComponent() {
         ActionManager am = ActionManager.getInstance();
         BasicProjectInfoButton action = new BasicProjectInfoButton();

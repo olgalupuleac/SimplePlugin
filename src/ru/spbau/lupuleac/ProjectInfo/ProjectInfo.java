@@ -7,11 +7,19 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.ProjectScope;
 import com.intellij.util.indexing.FileBasedIndex;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class which collects the information about project:
+ * total number of classes, total number of methods,
+ * average length of method in project,
+ * average number of fields in classes
+ * and provides a Map with the information about each class.
+ */
 public class ProjectInfo {
     private Project project;
     private int totalNumberOfClasses;
@@ -23,10 +31,16 @@ public class ProjectInfo {
         collectInfo();
     }
 
+    /**
+     * @return total number of classes in the project
+     */
     public int getTotalNumberOfClasses() {
         return totalNumberOfClasses;
     }
 
+    /**
+     * @return total number of methods in the project
+     */
     public int getTotalNumberOfMethods() {
         int totalNumberOfMethods = 0;
         for (ClassInfo classInfo : classInfoMap.values()) {
@@ -35,6 +49,9 @@ public class ProjectInfo {
         return totalNumberOfMethods;
     }
 
+    /**
+     * @return average number of fields in class for this project
+     */
     public double getAverageNumberOfFields() {
         double totalNumberOfFields = 0;
         for (ClassInfo classInfo : classInfoMap.values()) {
@@ -43,6 +60,9 @@ public class ProjectInfo {
         return totalNumberOfFields / totalNumberOfClasses;
     }
 
+    /**
+     * @return average method length in the project
+     */
     public double getAverageMethodLength() {
         double totalMethodLength = 0;
         for (ClassInfo classInfo : classInfoMap.values()) {
@@ -51,19 +71,21 @@ public class ProjectInfo {
         return totalMethodLength / getTotalNumberOfMethods();
     }
 
+    @NotNull
     public Map<PsiClass, ClassInfo> getClassInfoMap() {
         return classInfoMap;
     }
 
+    /**
+     * Collects the information from the project.
+     */
     private void collectInfo() {
-        //VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
         Collection<VirtualFile> files = FileBasedIndex.getInstance()
                 .getContainingFiles(
                         FileTypeIndex.NAME,
                         JavaFileType.INSTANCE,
                         ProjectScope.getProjectScope(project));
         for (VirtualFile file : files) {
-            System.out.println(file.getUrl());
             PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
             if (psiFile instanceof PsiJavaFile) {
                 PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
@@ -78,7 +100,12 @@ public class ProjectInfo {
 
     }
 
-    private void collectInfoAboutMethods(PsiClass psiClass) {
+    /**
+     * Gets all methods from class and calculates their number and total body length.
+     *
+     * @param psiClass is psi class which methods are to be explored
+     */
+    private void collectInfoAboutMethods(@NotNull PsiClass psiClass) {
         if (!classInfoMap.containsKey(psiClass)) {
             classInfoMap.put(psiClass, new ClassInfo());
         }
@@ -94,7 +121,12 @@ public class ProjectInfo {
         }
     }
 
-    private void collectInfoAboutFields(PsiClass psiClass) {
+    /**
+     * Gets all fields from class and calculates their number and total name's length.
+     *
+     * @param psiClass is psi class which fields are to be explored
+     */
+    private void collectInfoAboutFields(@NotNull PsiClass psiClass) {
         if (!classInfoMap.containsKey(psiClass)) {
             classInfoMap.put(psiClass, new ClassInfo());
         }
